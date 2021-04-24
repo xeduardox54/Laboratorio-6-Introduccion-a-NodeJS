@@ -1,3 +1,4 @@
+const { response } = require('express');
 const express = require('express');
 const app = express();
 
@@ -35,6 +36,14 @@ app.get('/api/persons/:id',(req,res) => {
     const person = persons.find(c => c.id === parseInt(req.params.id));
     if(!person)
         res.status(404).send(`No se ha encontrado el registro con el id ${req.params.id}.`);
+    res.send(person);
+});
+app.delete('/api/persons/:id',(req,res) => {
+    const person = persons.find(c => c.id === parseInt(req.params.id));
+    if(!person)
+        res.status(404).send(`No se ha encontrado el registro con el id ${req.params.id}.`);
+    const index = persons.indexOf(person);
+    persons.splice(index,1)
     res.send(person);
 });
 
