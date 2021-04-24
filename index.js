@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 
-const agenda = [
+const persons = [
     {
         id:1,
         name: "Arto Hellias",
@@ -29,7 +29,14 @@ app.get('/info',(req,res) => {
     res.send(`<h3>Phonebook has info for ${agenda.length} people</h3><h3>`+now+"</h3>");
 });
 app.get('/api/persons',(req,res) => {
-    res.send(agenda);
+    res.send(persons);
+});
+app.get('/api/persons/:id',(req,res) => {
+    const person = persons.find(c => c.id === parseInt(req.params.id));
+    if(!person)
+        res.status(404).send(`No se ha encontrado el registro con el id ${req.params.id}.`);
+    res.send(person);
 });
 
-app.listen(3001,()=>console.log('Listening on port 3001'))
+const port = process.env.PORT || 3001;
+app.listen(port,()=>console.log(`Listening on port ${port}`));
