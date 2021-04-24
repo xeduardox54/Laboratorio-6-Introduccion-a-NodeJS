@@ -22,10 +22,11 @@ const agenda = [
         name: "Mary Poppendick",
         number: "39-23-6423122",
     },
-]
+];
+let now= new Date();
 
-app.get('/',(req,res) => {
-    res.send('Hola Mundo');
+app.get('/info',(req,res) => {
+    res.send(`<h3>Phonebook has info for ${agenda.length} people</h3><h3>`+now+"</h3>");
 });
 app.get('/api/persons',(req,res) => {
     res.send(agenda);
