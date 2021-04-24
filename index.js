@@ -49,6 +49,21 @@ app.delete('/api/persons/:id',(req,res) => {
     res.send(person);
 });
 app.post('/api/persons',(req,res) => {
+    //Validando espacios llenados
+    if(!req.body.name){
+        res.status(400).send({error:'name must be required'});
+        return;
+    } else if (!req.body.number){
+        res.status(400).send({error:'number must be required'});
+        return;
+    }
+    //Validando nombre no repetido
+    const names = persons.map((item)=>{return item['name']})
+    if(names.includes(req.body.name)){
+        res.status(400).send({error:'name is already added to list'});
+        return;
+    }
+
     const person = {
         id: Math.round(Math.random()*10000),
         name: req.body.name,
