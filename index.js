@@ -2,6 +2,8 @@ const { response } = require('express');
 const express = require('express');
 const app = express();
 
+app.use(express.json());
+
 const persons = [
     {
         id:1,
@@ -44,6 +46,15 @@ app.delete('/api/persons/:id',(req,res) => {
         res.status(404).send(`No se ha encontrado el registro con el id ${req.params.id}.`);
     const index = persons.indexOf(person);
     persons.splice(index,1)
+    res.send(person);
+});
+app.post('/api/persons',(req,res) => {
+    const person = {
+        id: Math.round(Math.random()*10000),
+        name: req.body.name,
+        number: req.body.number,
+    };
+    persons.push(person);
     res.send(person);
 });
 
