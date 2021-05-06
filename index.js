@@ -50,6 +50,9 @@ app.post('/api/persons',(req,res) => {
     persons.push(person);
     res.send(person);
 });
+app.use(function(req, res, next) {
+    res.status(404).send('Sorry cant find that!');
+});
 
 const port = process.env.PORT || 3001;
 app.listen(port,()=>console.log(`Listening on port ${port}`));
